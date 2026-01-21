@@ -1,34 +1,59 @@
-# Интерфейсы
+# Galaxy Outpost Manager
 
-Это контракт поведения
+---
 
-Содержит:
+###  Учебный проект на Kotlin, демонстрирующий основы объектно-ориентированного программированияиархитектурные приёмы языка. 
 
-* функции без реализации;
-* функции с default-реализацией;
-* свойства без хранения;
+---
+## Sealed-классы
+**Sealed-классы** используются для представления ограниченного набора состояний или результатов, которыеизвестны на этапе компиляции. 
 
-### Пример
-### Определяем интерфейс видео-плеера:
+Они позволяют:
 
+* гарантировать обработку всех возможных вариантов;
+* безопасно использовать конструкцию when без else;
+* удобно описывать состояния, события и результаты действий. 
+### Пример: результат работы модуля
+``` cs
+sealed-class ModuleResult {
+    data class Success(val message: String) : ModuleResult()
+    data class ResourceProduced(val resourceName: String, val amount: Int) : ModuleResult()
+    data class NotEnoughResources(
+        val resourceName: String, 
+        val required: Int, 
+        val available: Int
+    ) : ModuleResult()
+    data class Error(val reason: String) : ModuleResult()
+}
 ```
-    interface VideoPlayable {
-        fun play()
+## Object в Kotlin
+**object** — это специальная конструкция Kotlin, которая создаёт единственный экземпляр класса (Singleton).
+
+Особенности:
+
+* создаётся при первом обращении;
+* существует в одном экземпляре;
+* не имеет конструктора. 
+
+## Пример: глобальный логгер
+``` cs
+object Logger {
+private var counter = 0
+
+    fun log(message: String) {
+        counter++
+        println("[$counter] $message")
     }
+}
+```
+### Использование:
+``` cs
+Logger.log("Инициализация системы")
+Logger.log("Модуль запущен")
 ```
 
-### Определяем интерфейс аудио-плеера:
-```
-    interface AudioPlayable {
-        fun play()
-    }
-```
-
-### Далее создадим класс, который будет реализовывать оба интерфейса, и в нём переопределим метод для обоих интерфейсов:
-```
-    class MediaPlayer :VideoPlayable, AudioPlayble {
-        override fun play () {
-            println("Play audio and video")
-        }
-    }
-```
+**object** удобно использовать для:
+* логгеров;
+* конфигураций;
+* состояний без данных в sealed-классах;
+* утилитарных классов.
