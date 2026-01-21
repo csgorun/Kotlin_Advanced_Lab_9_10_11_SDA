@@ -14,7 +14,7 @@
 * безопасно использовать конструкцию when без else;
 * удобно описывать состояния, события и результаты действий. 
 ### Пример: результат работы модуля
-``` cs
+``` csharp
 sealed-class ModuleResult {
     data class Success(val message: String) : ModuleResult()
     data class ResourceProduced(val resourceName: String, val amount: Int) : ModuleResult()
@@ -36,7 +36,7 @@ sealed-class ModuleResult {
 * не имеет конструктора. 
 
 ## Пример: глобальный логгер
-``` cs
+``` csharp
 object Logger {
 private var counter = 0
 
@@ -47,7 +47,7 @@ private var counter = 0
 }
 ```
 ### Использование:
-``` cs
+``` csharp
 Logger.log("Инициализация системы")
 Logger.log("Модуль запущен")
 ```
